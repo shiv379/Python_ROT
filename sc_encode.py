@@ -1,28 +1,31 @@
 import string
 
-def plain_alphabet():
-    return string.ascii_lowercase
-
-def encoded_alphabet():
-    return "nopqrstuvwxyzabcdefghijklm" 
-    
 def shifted_alphabet(shift):
     shifted = "" 
     for i in string.ascii_lowercase:
         shifted += string.ascii_lowercase[(string.ascii_lowercase.index(i) + shift) % 26]
     return shifted
 
+def decode(plain_text, shift):
+    e_alpha=shifted_alphabet(shift) 
+    encoded_text = ""
+    for c in plain_text:
+        if c in string.ascii_lowercase:
+            plain_alphabet_index = string.ascii_lowercase.find(c.lower())
+            if c.isupper():
+                encoded_text += e_alpha[plain_alphabet_index].upper()
+            else:
+                encoded_text += e_alpha[plain_alphabet_index].lower()
+        else:
+            encoded_text += c
+    return encoded_text
+
+def brute_force(plain_text):
+    for i in range(0,26):
+        print(decode(plain_text, i)) 
+
 plain_text = None
-encoded_text = ""
 while plain_text is None:
-    plain_text = input("Enter message to encode: ").strip()
-print(plain_text,"¦")
-p_alpha=shifted_alphabet(0) 
-e_alpha=shifted_alphabet(3) 
-for index in range(len(plain_text)):
-    plain_alphabet_index = p_alpha.upper().find(plain_text[index].upper())
-    if plain_text[index].isupper():
-        encoded_text += e_alpha[plain_alphabet_index].upper()
-    else:
-        encoded_text += e_alpha[plain_alphabet_index].lower() 
-print("Encoded text: " + encoded_text)
+    plain_text = input("Enter message to encode: ").strip() 
+#print(decode(plain_text, 1))
+brute_force(plain_text) 
