@@ -1,25 +1,15 @@
 import string
 import os
-import collections
 
 def shifted_alphabet(shift):
-    shifted = collections.deque(string.ascii_lowercase) 
-    shifted.rotate(shift)
+    shifted = string.ascii_lowercase[shift:] +string.ascii_lowercase[:shift]
     return shifted
 
 def decode(plain_text, shift):
     e_alpha=shifted_alphabet(shift) 
     encoded_text = ""
-    for c in plain_text:
-        if c in string.ascii_lowercase:
-            plain_alphabet_index = string.ascii_lowercase.find(c.lower())
-            if c.isupper():
-                encoded_text += e_alpha[plain_alphabet_index].upper()
-            else:
-                encoded_text += e_alpha[plain_alphabet_index].lower()
-        else:
-            encoded_text += c
-    return encoded_text
+    trans_table = "".maketrans(string.ascii_lowercase, e_alpha) 
+    return plain_text.translate(trans_table)
 
 def brute_force(plain_text):
     for i in range(0,26):
@@ -47,12 +37,12 @@ def menu():
           while plain_text is None:
               plain_text = input("\nEnter message to encode: ").strip() 
       elif selection == '2': 
-          
-          decode(plain_text, 1)
+          print(decode(plain_text, 1)) 
+          input() 
       elif selection == '3':
           brute_force(plain_text) 
       elif selection == '4': 
           break
       
-plain_text =None
+plain_text ="abcdef"
 menu() 
