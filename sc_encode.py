@@ -1,5 +1,6 @@
 import string
 import os
+from getkey import getKey
 
 def shifted_alphabet(shift):
     shifted = string.ascii_lowercase[shift:] +string.ascii_lowercase[:shift]
@@ -18,6 +19,7 @@ def brute_force(plain_text):
 
 def menu():
     global plain_text
+    selected_menu=98
     menu = {}
     menu['1']="Enter text" 
     menu['2']="Fixed shift"
@@ -29,9 +31,11 @@ def menu():
       print('{:*^40}'.format('ROT Decoder'),"\n\n") 
       print("Input text: ",plain_text,"\n\n") 
       for entry in options: 
-          print(entry, menu[entry])
+          #print(entry, int(entry) ==selected_menu) 
+          print("*"*(int(entry)==selected_menu)," "*(int(entry)!=selected_menu), entry, menu[entry])
 
-      selection=input("\nPlease Select: ") 
+      #selection=input("\nPlease Select: ") 
+      selection=getKey() 
       if selection =='1': 
           plain_text = None
           while plain_text is None:
